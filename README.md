@@ -1,1 +1,1699 @@
 # Devi-Sitanggang
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berpikir Komputasional | Informatika Kelas X SMA (Fase E)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom subtle animations & scrollbar */
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .code-font {
+            font-family: 'Fira Code', monospace;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        .bar-transition {
+            transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease, transform 0.35s ease;
+        }
+        .stack-item-enter {
+            animation: slideDown 0.3s ease-out forwards;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .queue-item-enter {
+            animation: slideLeft 0.3s ease-out forwards;
+        }
+        @keyframes slideLeft {
+            from { opacity: 0; transform: translateX(25px) scale(0.95); }
+            to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-600 selection:text-white">
+
+    <!-- ==================== NAVBAR ==================== -->
+    <header class="sticky top-0 z-50 bg-white/85 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-2.5 group">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-600 to-indigo-500 flex items-center justify-center text-white font-bold shadow-md group-hover:scale-105 transition-transform">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-slate-900 tracking-tight text-base sm:text-lg block leading-none">Info<span class="text-brand-600">Edu</span> X</span>
+                        <span class="text-[11px] font-medium text-slate-500 tracking-wide">Fase E • Kurikulum Merdeka</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium">
+                    <a href="#tujuan" class="px-3 py-2 rounded-lg text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Tujuan</a>
+                    <a href="#pilar" class="px-3 py-2 rounded-lg text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">4 Pilar BK</a>
+                    <a href="#algoritma" class="px-3 py-2 rounded-lg text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Searching & Sorting</a>
+                    <a href="#struktur-data" class="px-3 py-2 rounded-lg text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Stack & Queue</a>
+                    <a href="#kuis" class="px-3 py-2 rounded-lg text-slate-600 hover:text-brand-600 hover:bg-brand-50 transition">Kuis HOTS</a>
+                    <a href="#github-guide" class="ml-2 px-3.5 py-2 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition text-xs font-semibold flex items-center gap-1.5 shadow-sm">
+                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+                        Deploy GitHub
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" aria-label="Buka Menu" class="md:hidden p-2.5 rounded-xl text-slate-600 hover:bg-slate-100 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-1 shadow-lg">
+            <a href="#tujuan" class="mobile-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600">1. Tujuan & Deep Learning</a>
+            <a href="#pilar" class="mobile-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600">2. 4 Pilar Berpikir Komputasional</a>
+            <a href="#algoritma" class="mobile-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600">3. Searching & Sorting Visualizer</a>
+            <a href="#struktur-data" class="mobile-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600">4. Struktur Data (Stack & Queue)</a>
+            <a href="#kuis" class="mobile-link block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-brand-50 hover:text-brand-600">5. Kuis Evaluasi HOTS</a>
+            <a href="#github-guide" class="mobile-link block px-3 py-2.5 rounded-lg text-sm font-semibold text-brand-700 bg-brand-50">6. Panduan GitHub Pages</a>
+        </div>
+    </header>
+
+    <!-- ==================== 1. HERO SECTION ==================== -->
+    <section class="relative overflow-hidden bg-gradient-to-b from-indigo-50/90 via-white to-slate-50 pt-12 pb-16 sm:pt-20 sm:pb-24 border-b border-slate-200/70">
+        <!-- Decorative blobs -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-full pointer-events-none overflow-hidden">
+            <div class="absolute -top-24 -right-24 w-80 h-80 rounded-full bg-brand-200/40 blur-3xl"></div>
+            <div class="absolute top-36 -left-24 w-72 h-72 rounded-full bg-cyan-200/40 blur-3xl"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <!-- Left Text -->
+                <div class="lg:col-span-7 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-100/80 border border-brand-200 text-brand-800 text-xs font-semibold mb-5">
+                        <span class="w-2 h-2 rounded-full bg-brand-600 animate-pulse"></span>
+                        Informatika Kelas X SMA • Fase E Kurikulum Merdeka
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl lg:text-[3.25rem] font-extrabold text-slate-900 tracking-tight leading-[1.15] mb-5">
+                        Berpikir Komputasional: <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-cyan-600">Seni Memecahkan Masalah</span> Secara Logis
+                    </h1>
+                    <p class="text-base sm:text-lg text-slate-600 leading-relaxed mb-8 max-w-2xl mx-auto lg:mx-0">
+                        Berpikir komputasional bukan berarti berpikir seperti komputer, melainkan melatih otak manusia untuk merumuskan masalah kompleks dan merancang solusi efisien yang dapat dijalankan oleh manusia maupun mesin.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5">
+                        <a href="#pilar" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-semibold shadow-lg shadow-brand-600/25 transition flex items-center justify-center gap-2">
+                            Mulai Eksplorasi Materi
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                        </a>
+                        <a href="#kuis" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 text-slate-700 font-semibold border border-slate-300 shadow-sm transition flex items-center justify-center gap-2">
+                            Uji Pemahaman (Kuis HOTS)
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Interactive Mindful Reflection Card -->
+                <div class="lg:col-span-5">
+                    <div class="bg-white rounded-3xl p-6 sm:p-7 shadow-xl shadow-slate-200/70 border border-slate-200/80 animate-float">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+                                ✨ Mindful Hook
+                            </span>
+                            <span class="text-xs text-slate-400 font-mono">BK-101</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Pernahkah kamu kebingungan mencari barang di kamar yang berantakan?</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                            Saat kamu mengelompokkan buku berdasarkan mata pelajaran, menyusunnya dari yang paling tipis ke tebal, dan membuang kertas bekas yang tidak terpakai—tanpa sadar kamu baru saja menerapkan <strong>Berpikir Komputasional</strong>!
+                        </p>
+                        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
+                            <label for="reflection-input" class="block text-xs font-semibold text-slate-700 mb-1.5">
+                                Refleksi Singkat (Mindful Learning): Masalah sehari-hari apa yang ingin kamu selesaikan hari ini?
+                            </label>
+                            <div class="flex gap-2">
+                                <input id="reflection-input" type="text" placeholder="Contoh: Mengatur jadwal belajar ujian..." class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-500 bg-white">
+                                <button onclick="saveReflection()" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shrink-0 transition">
+                                    Simpan
+                                </button>
+                            </div>
+                            <p id="reflection-feedback" class="hidden mt-2 text-xs text-emerald-700 font-medium"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tujuan Pembelajaran & Pendekatan Deep Learning -->
+            <div id="tujuan" class="mt-16 pt-12 border-t border-slate-200/80 scroll-mt-20">
+                <div class="text-center max-w-3xl mx-auto mb-10">
+                    <span class="text-xs font-bold uppercase tracking-widest text-brand-600">Capaian Pembelajaran Fase E</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">Tujuan Pembelajaran & Pendekatan Deep Learning</h2>
+                    <p class="text-sm sm:text-base text-slate-600 mt-2">
+                        Peserta didik mampu memahami penerapan fondasi berpikir komputasional (dekomposisi, pengenalan pola, abstraksi, algoritma) untuk menghasilkan solusi efisien pada persoalan pencarian, pengurutan, dan struktur data dasar.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <!-- Mindful -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl mb-4">🧠</div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1.5">1. Mindful Learning (Berkesadaran)</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Sadar akan proses berpikir diri sendiri (*metakognisi*). Kamu tidak sekadar menghafal definisi algoritma, tetapi mengamati setiap langkah logika yang terjadi.
+                        </p>
+                    </div>
+                    <!-- Meaningful -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition">
+                        <div class="w-11 h-11 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-xl mb-4">🌍</div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1.5">2. Meaningful Learning (Bermakna)</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Menghubungkan konsep abstrak informatika (seperti tumpukan data atau pencarian biner) dengan realitas nyata seperti riwayat *Undo* atau mencari kata di kamus.
+                        </p>
+                    </div>
+                    <!-- Joyful -->
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition">
+                        <div class="w-11 h-11 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl mb-4">🎮</div>
+                        <h3 class="font-bold text-slate-900 text-base mb-1.5">3. Joyful Learning (Menggembirakan)</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Belajar melalui eksplorasi simulasi visual interaktif, eksperimen langsung, dan tantangan logika yang memicu rasa ingin tahu tanpa tekanan.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 2. EMPAT PILAR BERPIKIR KOMPUTASIONAL ==================== -->
+    <section id="pilar" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-16">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-bold uppercase tracking-wider border border-brand-200">Fondasi Utama</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3">4 Pilar Berpikir Komputasional</h2>
+            <p class="text-sm sm:text-base text-slate-600 mt-3">
+                Klik setiap tab pilar di bawah ini untuk mempelajari konsepnya, contoh kehidupan nyata, serta mencoba <strong>simulasi interaktifnya</strong> secara langsung!
+            </p>
+        </div>
+
+        <!-- Tabs Navigation -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-8" role="tablist">
+            <button onclick="selectPillar('dekomposisi')" id="tab-dekomposisi" class="pillar-tab active-tab p-4 rounded-2xl border-2 border-brand-600 bg-brand-600 text-white text-left transition shadow-md">
+                <div class="text-xs font-mono opacity-80 mb-1">PILAR 01</div>
+                <div class="font-bold text-sm sm:text-base">🧩 Dekomposisi</div>
+                <div class="text-xs opacity-90 mt-0.5 hidden sm:block">Memecah masalah besar</div>
+            </button>
+            <button onclick="selectPillar('pola')" id="tab-pola" class="pillar-tab p-4 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 hover:border-brand-300 text-left transition">
+                <div class="text-xs font-mono text-slate-400 mb-1">PILAR 02</div>
+                <div class="font-bold text-sm sm:text-base">🔍 Pengenalan Pola</div>
+                <div class="text-xs text-slate-500 mt-0.5 hidden sm:block">Mencari kesamaan tren</div>
+            </button>
+            <button onclick="selectPillar('abstraksi')" id="tab-abstraksi" class="pillar-tab p-4 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 hover:border-brand-300 text-left transition">
+                <div class="text-xs font-mono text-slate-400 mb-1">PILAR 03</div>
+                <div class="font-bold text-sm sm:text-base">🎯 Abstraksi</div>
+                <div class="text-xs text-slate-500 mt-0.5 hidden sm:block">Fokus pada hal penting</div>
+            </button>
+            <button onclick="selectPillar('algoritma')" id="tab-algoritma" class="pillar-tab p-4 rounded-2xl border-2 border-slate-200 bg-white text-slate-700 hover:border-brand-300 text-left transition">
+                <div class="text-xs font-mono text-slate-400 mb-1">PILAR 04</div>
+                <div class="font-bold text-sm sm:text-base">⚙️ Algoritma</div>
+                <div class="text-xs text-slate-500 mt-0.5 hidden sm:block">Langkah solusi terurut</div>
+            </button>
+        </div>
+
+        <!-- Pillar Content Panels -->
+        <div class="bg-white rounded-3xl border border-slate-200/90 shadow-lg p-6 sm:p-10">
+            <!-- PANEL 1: DEKOMPOSISI -->
+            <div id="panel-dekomposisi" class="pillar-panel grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold">
+                        Decomposition
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-slate-900">Dekomposisi: Memecah Masalah Kompleks</h3>
+                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                        <strong>Dekomposisi</strong> adalah kemampuan memecah masalah yang besar, rumit, dan membingungkan menjadi sub-masalah yang lebih kecil, sederhana, dan mudah dikelola secara terpisah.
+                    </p>
+                    <div class="p-4 rounded-2xl bg-amber-50/80 border border-amber-200/80">
+                        <h4 class="font-bold text-amber-900 text-sm mb-1">💡 Contoh Kehidupan Nyata:</h4>
+                        <p class="text-xs sm:text-sm text-amber-800 leading-relaxed">
+                            Membuat acara <strong>Pentas Seni (Pensi) Sekolah</strong> terasa mustahil jika dipikirkan sendirian. Dengan dekomposisi, panitia membaginya menjadi divisi kecil: Acara, Konsumsi, Perlengkapan, Keamanan, dan Publikasi.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Interactive Sim: Dekomposisi -->
+                <div class="lg:col-span-7 bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-600">Simulasi Interaktif Dekomposisi</span>
+                        <button onclick="resetDecomp()" class="text-xs font-semibold text-slate-500 hover:text-slate-800 underline">Reset</button>
+                    </div>
+                    <p class="text-sm font-semibold text-slate-800 mb-3">
+                        Masalah Utama: <span class="text-brand-700">"Merancang Aplikasi E-Kantin Sekolah"</span>
+                    </p>
+                    <p class="text-xs text-slate-500 mb-4">Klik tombol di bawah untuk memecah sistem besar ini menjadi modul-modul kecil yang siap dikerjakan programmer:</p>
+                    
+                    <div id="decomp-container" class="space-y-3">
+                        <button onclick="expandDecomp()" id="decomp-main-btn" class="w-full p-4 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow transition flex items-center justify-between">
+                            <span>📦 Sistem E-Kantin Sekolah (Klik untuk Pecah!)</span>
+                            <span>+ Pecah Modul</span>
+                        </button>
+                        <div id="decomp-submodules" class="hidden grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                            <!-- Injected via JS -->
+                        </div>
+                    </div>
+                    <div id="decomp-status" class="mt-4 text-xs text-slate-600 bg-white p-3 rounded-xl border border-slate-200 hidden"></div>
+                </div>
+            </div>
+
+            <!-- PANEL 2: PENGENALAN POLA -->
+            <div id="panel-pola" class="pillar-panel hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold">
+                        Pattern Recognition
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-slate-900">Pengenalan Pola: Menemukan Keteraturan</h3>
+                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                        <strong>Pengenalan Pola</strong> adalah proses mengamati kesamaan, tren, atau keteraturan di antara bagian-bagian masalah yang telah dipecah, sehingga kita bisa memprediksi hasil berikutnya.
+                    </p>
+                    <div class="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200/80">
+                        <h4 class="font-bold text-emerald-900 text-sm mb-1">💡 Contoh Kehidupan Nyata:</h4>
+                        <p class="text-xs sm:text-sm text-emerald-800 leading-relaxed">
+                            Aplikasi cuaca memprediksi hujan berdasarkan pola kelembapan udara dan pergerakan awan. Di e-commerce, sistem merekomendasikan barang berdasarkan pola belanja pengguna sebelumnya.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Interactive Sim: Pengenalan Pola -->
+                <div class="lg:col-span-7 bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">Simulasi Interaktif Pengenalan Pola</span>
+                        <span id="pattern-score" class="text-xs font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">Level 1 / 3</span>
+                    </div>
+                    <p id="pattern-desc" class="text-sm text-slate-700 mb-4 font-medium">
+                        Amati deret pola data sensor lalu lintas berikut dan tebak angka selanjutnya:
+                    </p>
+                    <div id="pattern-sequence" class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 my-5">
+                        <!-- Rendered by JS -->
+                    </div>
+                    <div id="pattern-options" class="grid grid-cols-3 gap-3 mt-4">
+                        <!-- Rendered by JS -->
+                    </div>
+                    <div id="pattern-feedback" class="mt-4 p-3 rounded-xl text-xs font-medium hidden"></div>
+                </div>
+            </div>
+
+            <!-- PANEL 3: ABSTRAKSI -->
+            <div id="panel-abstraksi" class="pillar-panel hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold">
+                        Abstraction
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-slate-900">Abstraksi: Menyaring Informasi Penting</h3>
+                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                        <strong>Abstraksi</strong> adalah proses fokus hanya pada informasi yang relevan dan penting untuk menyelesaikan masalah, sambil mengabaikan detail-detail yang tidak perlu.
+                    </p>
+                    <div class="p-4 rounded-2xl bg-sky-50/80 border border-sky-200/80">
+                        <h4 class="font-bold text-sky-900 text-sm mb-1">💡 Contoh Kehidupan Nyata:</h4>
+                        <p class="text-xs sm:text-sm text-sky-800 leading-relaxed">
+                            <strong>Peta Rute KRL/TransJakarta</strong> hanya menampilkan nama stasiun, jalur warna, dan titik transit. Peta tersebut mengabaikan warna gedung, pohon, atau warung di sekitar jalan karena tidak relevan bagi penumpang.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Interactive Sim: Abstraksi -->
+                <div class="lg:col-span-7 bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200">
+                    <span class="text-xs font-bold uppercase tracking-wider text-sky-600 block mb-2">Simulasi Interaktif Abstraksi</span>
+                    <p class="text-sm font-semibold text-slate-800 mb-1">Studi Kasus: Membuat Sistem Absensi Siswa Otomatis</p>
+                    <p class="text-xs text-slate-600 mb-4">Pilih <strong>3 atribut data siswa yang paling esensial</strong> (relevan) untuk sistem absensi, dan abaikan data yang tidak diperlukan!</p>
+                    
+                    <div id="abstraction-items" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-4">
+                        <!-- Rendered by JS -->
+                    </div>
+                    <div class="flex items-center justify-between gap-3">
+                        <button onclick="checkAbstraction()" class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold transition shadow-sm">
+                            Evaluasi Model Abstraksi
+                        </button>
+                        <button onclick="resetAbstraction()" class="text-xs text-slate-500 hover:text-slate-800 underline">Reset Pilihan</button>
+                    </div>
+                    <div id="abstraction-feedback" class="mt-4 p-3 rounded-xl text-xs hidden"></div>
+                </div>
+            </div>
+
+            <!-- PANEL 4: ALGORITMA -->
+            <div id="panel-algoritma" class="pillar-panel hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 text-purple-700 text-xs font-bold">
+                        Algorithmic Thinking
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-slate-900">Algoritma: Urutan Langkah Solusi</h3>
+                    <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                        <strong>Algoritma</strong> adalah serangkaian instruksi atau langkah-langkah logis yang terurut, jelas, dan terbatas untuk menyelesaikan suatu masalah dari kondisi awal hingga tujuan akhir.
+                    </p>
+                    <div class="p-4 rounded-2xl bg-purple-50/80 border border-purple-200/80">
+                        <h4 class="font-bold text-purple-900 text-sm mb-1">💡 Contoh Kehidupan Nyata:</h4>
+                        <p class="text-xs sm:text-sm text-purple-800 leading-relaxed">
+                            Resep memasak mie instan atau panduan merakit furnitur. Jika urutan langkahnya tertukar (misal: menuang bumbu sebelum merebus air dibuang), hasilnya tidak akan sesuai harapan.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Interactive Sim: Algoritma -->
+                <div class="lg:col-span-7 bg-slate-50 rounded-2xl p-5 sm:p-6 border border-slate-200">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-purple-600">Simulasi Interaktif Algoritma</span>
+                        <span class="text-xs text-slate-500">Robot Pengantar Paket 🤖</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-700 mb-3">
+                        Susun algoritma perintah agar Robot (🤖) mencapai Tujuan (🏁) tanpa menabrak Rintangan (🧱)!
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+                        <!-- 4x4 Grid -->
+                        <div id="robot-grid" class="grid grid-cols-4 gap-1.5 bg-slate-200 p-2 rounded-xl max-w-[230px] mx-auto w-full aspect-square">
+                            <!-- Rendered by JS -->
+                        </div>
+
+                        <!-- Controls & Command Queue -->
+                        <div class="space-y-3">
+                            <div class="text-xs font-semibold text-slate-600">Tambah Instruksi Langkah:</div>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="addRobotCmd('ATAS')" class="px-2.5 py-2 rounded-lg bg-white border border-slate-300 hover:bg-purple-50 text-xs font-bold">⬆️ Atas</button>
+                                <button onclick="addRobotCmd('BAWAH')" class="px-2.5 py-2 rounded-lg bg-white border border-slate-300 hover:bg-purple-50 text-xs font-bold">⬇️ Bawah</button>
+                                <button onclick="addRobotCmd('KIRI')" class="px-2.5 py-2 rounded-lg bg-white border border-slate-300 hover:bg-purple-50 text-xs font-bold">⬅️ Kiri</button>
+                                <button onclick="addRobotCmd('KANAN')" class="px-2.5 py-2 rounded-lg bg-white border border-slate-300 hover:bg-purple-50 text-xs font-bold">➡️ Kanan</button>
+                            </div>
+                            <div class="bg-white p-2.5 rounded-xl border border-slate-200 min-h-[54px]">
+                                <div class="text-[11px] text-slate-400 mb-1">Antrean Algoritma (<span id="cmd-count">0</span>/8):</div>
+                                <div id="robot-cmds-display" class="flex flex-wrap gap-1 text-[11px] font-mono"></div>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="runRobotAlgo()" class="flex-1 py-2 rounded-xl bg-purple-600 hover:bg-purple-700 text-white text-xs font-bold transition">▶️ Jalankan</button>
+                                <button onclick="resetRobotAlgo()" class="px-3 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold transition">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="robot-feedback" class="mt-3 p-2.5 rounded-xl text-xs font-medium hidden"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 3. SEARCHING & SORTING VISUALIZER ==================== -->
+    <section id="algoritma" class="py-16 sm:py-24 bg-slate-900 text-white scroll-mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-bold uppercase tracking-wider border border-indigo-500/30">
+                    Penerapan Algoritma Standar
+                </span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold mt-3">Algoritma Pencarian (Searching) & Pengurutan (Sorting)</h2>
+                <p class="text-sm sm:text-base text-slate-300 mt-3">
+                    Komputer memproses jutaan data setiap detik menggunakan algoritma pencarian dan pengurutan. Amati bagaimana komputer bekerja langkah-demi-langkah (*step-by-step*) melalui visualizer interaktif di bawah ini!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- CARD A: SEARCHING VISUALIZER -->
+                <div class="bg-slate-800/90 rounded-3xl border border-slate-700/80 p-6 sm:p-7 flex flex-col justify-between shadow-xl">
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-lg bg-cyan-500/20 text-cyan-300 text-xs font-bold font-mono">SEARCHING</span>
+                            <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-700">
+                                <button onclick="setSearchAlgo('linear')" id="btn-search-linear" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-600 text-white transition">Linear Search</button>
+                                <button onclick="setSearchAlgo('binary')" id="btn-search-binary" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">Binary Search</button>
+                            </div>
+                        </div>
+
+                        <h3 id="search-title" class="text-xl font-bold text-white mb-1">Linear Search (Pencarian Beruntun)</h3>
+                        <p id="search-desc" class="text-xs sm:text-sm text-slate-300 mb-5 leading-relaxed">
+                            Memeriksa elemen data satu per satu dari indeks paling kiri hingga target ditemukan. Cocok untuk data acak maupun terurut. Kompleksitas waktu: <code class="text-cyan-300 font-mono">O(n)</code>.
+                        </p>
+
+                        <!-- Search Boxes Array -->
+                        <div class="bg-slate-900/90 rounded-2xl p-4 sm:p-5 border border-slate-700/80 mb-5">
+                            <div class="flex justify-between text-[11px] text-slate-400 font-mono mb-2">
+                                <span>Indeks Array [0..7]</span>
+                                <span id="search-step-counter">Langkah: 0</span>
+                            </div>
+                            <div id="search-array-container" class="grid grid-cols-8 gap-1.5 sm:gap-2">
+                                <!-- Rendered by JS -->
+                            </div>
+                            <div class="flex flex-wrap gap-3 mt-4 text-[11px] text-slate-400">
+                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-500 inline-block"></span> Sedang diperiksa</span>
+                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> Ditemukan!</span>
+                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-slate-700 opacity-40 inline-block"></span> Diabaikan</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="space-y-3">
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <label for="search-target" class="text-xs font-semibold text-slate-300">Cari Angka:</label>
+                            <input id="search-target" type="number" value="42" class="w-20 px-3 py-2 rounded-xl bg-slate-900 border border-slate-600 text-white text-sm font-mono focus:outline-none focus:border-cyan-400">
+                            <button onclick="stepSearch()" id="btn-search-step" class="px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold transition shadow">
+                                ⏭️ Langkah Berikutnya
+                            </button>
+                            <button onclick="autoRunSearch()" id="btn-search-auto" class="px-3.5 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold transition">
+                                ▶️ Otomatis
+                            </button>
+                            <button onclick="resetSearch()" class="px-3 py-2 rounded-xl border border-slate-600 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition">
+                                Acak Data
+                            </button>
+                        </div>
+                        <div id="search-log" class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono text-cyan-300 min-h-[46px]">
+                            Siap mencari. Klik "Langkah Berikutnya" atau "Otomatis".
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD B: SORTING VISUALIZER -->
+                <div class="bg-slate-800/90 rounded-3xl border border-slate-700/80 p-6 sm:p-7 flex flex-col justify-between shadow-xl">
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+                            <span class="px-3 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 text-xs font-bold font-mono">SORTING</span>
+                            <div class="flex bg-slate-900 p-1 rounded-xl border border-slate-700">
+                                <button onclick="setSortAlgo('bubble')" id="btn-sort-bubble" class="px-2.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white transition">Bubble</button>
+                                <button onclick="setSortAlgo('selection')" id="btn-sort-selection" class="px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">Selection</button>
+                                <button onclick="setSortAlgo('insertion')" id="btn-sort-insertion" class="px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">Insertion</button>
+                            </div>
+                        </div>
+
+                        <h3 id="sort-title" class="text-xl font-bold text-white mb-1">Bubble Sort (Pengurutan Gelembung)</h3>
+                        <p id="sort-desc" class="text-xs sm:text-sm text-slate-300 mb-5 leading-relaxed">
+                            Membandingkan dua elemen bersebelahan dan menukarnya jika urutannya salah, sehingga nilai terbesar "mengapung" ke ujung kanan di setiap iterasi.
+                        </p>
+
+                        <!-- Bar Chart Visualizer -->
+                        <div class="bg-slate-900/90 rounded-2xl p-4 sm:p-5 border border-slate-700/80 mb-5">
+                            <div class="flex justify-between text-[11px] text-slate-400 font-mono mb-3">
+                                <span>Visualisasi Batang Data</span>
+                                <span id="sort-step-counter">Langkah: 0</span>
+                            </div>
+                            <div id="sort-bars-container" class="h-40 flex items-end justify-center gap-2 sm:gap-3 pt-4 px-2">
+                                <!-- Bars injected by JS -->
+                            </div>
+                            <div class="flex flex-wrap gap-3 mt-4 text-[11px] text-slate-400">
+                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-400 inline-block"></span> Dibandingkan</span>
+                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-rose-500 inline-block"></span> Ditukar / Sisip</span>
+                                <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> Terurut</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Controls -->
+                    <div class="space-y-3">
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <button onclick="stepSort()" id="btn-sort-step" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow">
+                                ⏭️ Langkah Berikutnya
+                            </button>
+                            <button onclick="autoRunSort()" id="btn-sort-auto" class="px-3.5 py-2 rounded-xl bg-slate-700 hover:bg-slate-600 text-white text-xs font-semibold transition">
+                                ▶️ Otomatis
+                            </button>
+                            <button onclick="resetSort()" class="px-3 py-2 rounded-xl border border-slate-600 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition">
+                                Acak Ulang
+                            </button>
+                        </div>
+                        <div id="sort-log" class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono text-indigo-300 min-h-[46px]">
+                            Siap mengurutkan. Klik "Langkah Berikutnya" atau "Otomatis".
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 4. STRUKTUR DATA DASAR (STACK & QUEUE) ==================== -->
+    <section id="struktur-data" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-16">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-bold uppercase tracking-wider border border-brand-200">Organisasi Data</span>
+            <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3">Struktur Data Dasar: Stack & Queue</h2>
+            <p class="text-sm sm:text-base text-slate-600 mt-3">
+                Cara data disimpan dan diakses sangat memengaruhi efisiensi algoritma. Coba simulasi langsung dua struktur data linear paling fundamental dalam pemrograman!
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- STACK (TUMPUKAN - LIFO) -->
+            <div class="bg-white rounded-3xl border border-slate-200/90 shadow-lg p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-extrabold">LIFO (Last-In, First-Out)</span>
+                        <span class="text-xs font-mono text-slate-400">Kapasitas Maks: 5</span>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-slate-900 mb-2">📚 Stack (Tumpukan)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Data yang <strong>terakhir masuk</strong> akan menjadi yang <strong>pertama keluar</strong>, persis seperti tumpukan piring atau fitur <strong>Undo (Ctrl+Z)</strong> pada aplikasi pengolah kata.
+                    </p>
+
+                    <!-- Controls -->
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <input id="stack-input" type="text" maxlength="14" placeholder="Data (mis: Buku A)" class="flex-1 min-w-[130px] px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <button onclick="pushStack()" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition shadow-sm">
+                            ⬇️ Push (Tambah)
+                        </button>
+                        <button onclick="popStack()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition shadow-sm">
+                            ⬆️ Pop (Ambil)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stack Visual Container -->
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200">
+                    <div class="text-center text-[11px] font-mono text-slate-400 mb-2">▲ PINTU MASUK / KELUAR (TOP) ▲</div>
+                    <div id="stack-visual" class="w-full max-w-[260px] mx-auto min-h-[210px] border-x-4 border-b-4 border-slate-400 rounded-b-2xl p-2.5 flex flex-col-reverse justify-start gap-2 bg-white shadow-inner">
+                        <!-- Rendered by JS -->
+                    </div>
+                    <div id="stack-msg" class="mt-3 text-center text-xs font-medium text-slate-600">
+                        Tumpukan siap. Coba klik Push atau Pop!
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUEUE (ANTREAN - FIFO) -->
+            <div class="bg-white rounded-3xl border border-slate-200/90 shadow-lg p-6 sm:p-8 flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-extrabold">FIFO (First-In, First-Out)</span>
+                        <span class="text-xs font-mono text-slate-400">Kapasitas Maks: 5</span>
+                    </div>
+                    <h3 class="text-2xl font-extrabold text-slate-900 mb-2">🚶‍♂️ Queue (Antrean)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                        Data yang <strong>pertama masuk</strong> akan menjadi yang <strong>pertama keluar</strong>, seperti antrean tiket bioskop atau antrean dokumen pada <strong>Printer</strong>.
+                    </p>
+
+                    <!-- Controls -->
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        <input id="queue-input" type="text" maxlength="12" placeholder="Nama (mis: Andi)" class="flex-1 min-w-[130px] px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
+                        <button onclick="enqueueItem()" class="px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold transition shadow-sm">
+                            ⬅️ Enqueue (Masuk)
+                        </button>
+                        <button onclick="dequeueItem()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold transition shadow-sm">
+                            ➡️ Dequeue (Keluar)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Queue Visual Container -->
+                <div class="bg-slate-50 rounded-2xl p-5 border border-slate-200 flex flex-col justify-center min-h-[268px]">
+                    <div class="flex justify-between text-[11px] font-mono text-slate-500 mb-2 px-1">
+                        <span>◀ KELUAR (FRONT)</span>
+                        <span>MASUK (REAR) ◀</span>
+                    </div>
+                    <div id="queue-visual" class="w-full min-h-[84px] border-y-4 border-slate-400 bg-white px-3 py-2.5 flex items-center gap-2 overflow-x-auto shadow-inner">
+                        <!-- Rendered by JS -->
+                    </div>
+                    <div id="queue-msg" class="mt-4 text-center text-xs font-medium text-slate-600">
+                        Antrean siap. Data masuk dari kanan, keluar dari kiri!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 5. KUIS EVALUASI HOTS INTERAKTIF ==================== -->
+    <section id="kuis" class="py-16 sm:py-24 bg-gradient-to-b from-slate-100 to-indigo-50/60 border-t border-slate-200 scroll-mt-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <span class="px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-bold uppercase tracking-wider">Evaluasi Pemahaman</span>
+                <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-3">Kuis Evaluasi Berpikir Komputasional (HOTS)</h2>
+                <p class="text-sm sm:text-base text-slate-600 mt-2">
+                    Jawab 5 soal studi kasus penalaran tingkat tinggi (*Higher Order Thinking Skills*) berikut dan dapatkan skor serta pembahasan instan!
+                </p>
+            </div>
+
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-200/90 p-6 sm:p-9">
+                <!-- Progress Bar -->
+                <div class="flex items-center justify-between text-xs font-bold text-slate-500 mb-2">
+                    <span id="quiz-progress-text">Soal 1 dari 5</span>
+                    <span id="quiz-live-score" class="text-brand-600">Skor: 0</span>
+                </div>
+                <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden mb-7">
+                    <div id="quiz-progress-bar" class="h-full bg-brand-600 transition-all duration-300" style="width: 20%;"></div>
+                </div>
+
+                <!-- Question Container -->
+                <div id="quiz-body">
+                    <span id="quiz-category" class="inline-block px-2.5 py-1 rounded-md bg-brand-50 text-brand-700 text-xs font-bold mb-3">Kategori</span>
+                    <h3 id="quiz-question" class="text-base sm:text-lg font-bold text-slate-900 leading-relaxed mb-5">
+                        Memuat pertanyaan...
+                    </h3>
+
+                    <div id="quiz-options" class="space-y-3">
+                        <!-- Options injected via JS -->
+                    </div>
+
+                    <!-- Instant Explanation Box -->
+                    <div id="quiz-explanation" class="hidden mt-6 p-4 rounded-2xl border text-sm leading-relaxed">
+                        <!-- Explanation injected via JS -->
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold shadow-md transition">
+                            Soal Berikutnya →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Final Result Screen -->
+                <div id="quiz-result" class="hidden text-center py-6">
+                    <div id="quiz-medal" class="text-5xl mb-3">🏆</div>
+                    <h3 class="text-2xl font-extrabold text-slate-900 mb-1">Evaluasi Selesai!</h3>
+                    <p id="quiz-final-desc" class="text-sm text-slate-600 mb-6">Hasil analisis kemampuan berpikir komputasionalmu:</p>
+                    
+                    <div class="inline-flex items-center gap-4 bg-slate-50 border border-slate-200 px-8 py-5 rounded-2xl mb-6">
+                        <div class="text-center">
+                            <div class="text-xs text-slate-500 uppercase font-bold">Nilai Akhir</div>
+                            <div id="quiz-final-score" class="text-4xl font-extrabold text-brand-600">100</div>
+                        </div>
+                        <div class="h-10 w-px bg-slate-300"></div>
+                        <div class="text-left text-xs text-slate-600 space-y-1">
+                            <div>Jawaban Benar: <strong id="quiz-correct-count" class="text-emerald-600">5</strong> / 5</div>
+                            <div>Predikat: <strong id="quiz-predicate" class="text-slate-900">Sangat Mahir</strong></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button onclick="restartQuiz()" class="px-6 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-sm font-bold transition shadow">
+                            🔄 Ulangi Kuis HOTS
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== 6. FOOTER & PANDUAN GITHUB PAGES ==================== -->
+    <footer id="github-guide" class="bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-800 scroll-mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 mb-12">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">
+                            🚀 Siap Publikasi Online Gratis
+                        </span>
+                        <h3 class="text-xl sm:text-2xl font-extrabold text-white">Panduan Singkat Hosting File Ini di GitHub Pages</h3>
+                    </div>
+                    <span class="text-xs font-mono bg-slate-800 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700">Nama File: index.html</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
+                        <div class="w-7 h-7 rounded-lg bg-brand-600 text-white font-bold text-xs flex items-center justify-center mb-3">1</div>
+                        <h4 class="font-bold text-white text-sm mb-1">Buat Repository Baru</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Masuk ke akun <strong>GitHub.com</strong>, klik <strong>New Repository</strong>, beri nama (misal: <code class="text-indigo-300">informatika-kelas-x</code>), pilih <strong>Public</strong>, lalu klik <em>Create repository</em>.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
+                        <div class="w-7 h-7 rounded-lg bg-brand-600 text-white font-bold text-xs flex items-center justify-center mb-3">2</div>
+                        <h4 class="font-bold text-white text-sm mb-1">Unggah File index.html</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Klik <strong>uploading an existing file</strong>, seret file <code class="text-indigo-300">index.html</code> ini ke halaman tersebut, lalu klik tombol hijau <strong>Commit changes</strong>.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
+                        <div class="w-7 h-7 rounded-lg bg-brand-600 text-white font-bold text-xs flex items-center justify-center mb-3">3</div>
+                        <h4 class="font-bold text-white text-sm mb-1">Aktifkan GitHub Pages</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Buka tab <strong>Settings</strong> &rarr; menu <strong>Pages</strong> di bilah kiri. Pada bagian <em>Branch</em>, ubah dari <em>None</em> menjadi <strong>main</strong> (folder <code class="text-indigo-300">/root</code>), lalu klik <strong>Save</strong>.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
+                        <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white font-bold text-xs flex items-center justify-center mb-3">4</div>
+                        <h4 class="font-bold text-white text-sm mb-1">Bagikan Tautan Web</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Tunggu 1–2 menit lalu refresh halaman Settings &rarr; Pages. Tautan situsmu (<code class="text-emerald-300">username.github.io/nama-repo</code>) siap dibagikan ke siswa!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 border-t border-slate-800/80 pt-8">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-slate-300">InfoEdu X — Berpikir Komputasional</span>
+                    <span>•</span>
+                    <span>Informatika SMA Fase E (Kurikulum Merdeka)</span>
+                </div>
+                <div>
+                    Dirancang untuk Pembelajaran Mendalam (*Mindful, Meaningful, Joyful Learning*)
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== JAVASCRIPT INTERAKTIF ==================== -->
+    <script>
+        /* =========================================================
+           0. MOBILE NAVIGATION & MINDFUL REFLECTION
+           ========================================================= */
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+
+        function saveReflection() {
+            const input = document.getElementById('reflection-input');
+            const feedback = document.getElementById('reflection-feedback');
+            const val = input.value.trim();
+            if (!val) {
+                feedback.textContent = "💡 Tuliskan satu masalah kecil di pikiranmu terlebih dahulu.";
+                feedback.className = "mt-2 text-xs text-amber-700 font-medium block";
+                return;
+            }
+            feedback.textContent = `✅ Bagus! Masalah "${val}" bisa kamu pecah menjadi langkah-langkah kecil menggunakan 4 pilar di bawah ini.`;
+            feedback.className = "mt-2 text-xs text-emerald-700 font-medium block";
+        }
+
+        /* =========================================================
+           1. TABS & SIMULASI 4 PILAR BERPIKIR KOMPUTASIONAL
+           ========================================================= */
+        function selectPillar(pillarName) {
+            // Update tab styles
+            document.querySelectorAll('.pillar-tab').forEach(tab => {
+                tab.classList.remove('border-brand-600', 'bg-brand-600', 'text-white', 'shadow-md');
+                tab.classList.add('border-slate-200', 'bg-white', 'text-slate-700');
+                const subtext = tab.querySelectorAll('div');
+                if (subtext[0]) subtext[0].classList.add('text-slate-400');
+                if (subtext[2]) subtext[2].classList.add('text-slate-500');
+            });
+
+            const activeTab = document.getElementById(`tab-${pillarName}`);
+            activeTab.classList.remove('border-slate-200', 'bg-white', 'text-slate-700');
+            activeTab.classList.add('border-brand-600', 'bg-brand-600', 'text-white', 'shadow-md');
+            const activeSub = activeTab.querySelectorAll('div');
+            if (activeSub[0]) activeSub[0].classList.remove('text-slate-400');
+            if (activeSub[2]) activeSub[2].classList.remove('text-slate-500');
+
+            // Toggle panels
+            document.querySelectorAll('.pillar-panel').forEach(panel => panel.classList.add('hidden'));
+            document.getElementById(`panel-${pillarName}`).classList.remove('hidden');
+        }
+
+        // --- Simulasi 1: Dekomposisi ---
+        const decompModules = [
+            { title: "🔐 Modul Autentikasi", desc: "Login siswa & guru menggunakan NIS/NIP", detail: "Sub-tugas: Form login, validasi password, sesi pengguna." },
+            { title: "🍱 Modul Katalog Menu", desc: "Daftar makanan kantin, harga, & stok harian", detail: "Sub-tugas: Foto menu, filter kategori, update stok real-time." },
+            { title: "💳 Modul Pembayaran", desc: "Keranjang belanja & pembayaran QRIS/Saldo", detail: "Sub-tugas: Hitung total harga, potong saldo, bukti transaksi." },
+            { title: "🔔 Modul Antrean Pesanan", desc: "Notifikasi pesanan siap diambil di stan", detail: "Sub-tugas: Status 'Dimasak' -> 'Siap Diambil' -> 'Selesai'." }
+        ];
+
+        function expandDecomp() {
+            const subContainer = document.getElementById('decomp-submodules');
+            const mainBtn = document.getElementById('decomp-main-btn');
+            const status = document.getElementById('decomp-status');
+
+            mainBtn.innerHTML = `<span>📦 Sistem E-Kantin Sekolah (Berhasil Dipecah Menjadi 4 Sub-Masalah!)</span><span>✓</span>`;
+            mainBtn.classList.replace('bg-brand-600', 'bg-slate-800');
+            subContainer.classList.remove('hidden');
+            subContainer.innerHTML = decompModules.map((m, idx) => `
+                <button onclick="inspectSubmodule(${idx})" class="p-3.5 rounded-xl bg-white border border-brand-200 hover:border-brand-500 hover:shadow-sm text-left transition">
+                    <div class="font-bold text-xs sm:text-sm text-slate-900">${m.title}</div>
+                    <div class="text-xs text-slate-500 mt-1">${m.desc}</div>
+                </button>
+            `).join('');
+
+            status.classList.remove('hidden');
+            status.innerHTML = "👆 Klik salah satu sub-modul di atas untuk memecahnya menjadi tugas yang lebih kecil lagi!";
+        }
+
+        function inspectSubmodule(idx) {
+            const m = decompModules[idx];
+            const status = document.getElementById('decomp-status');
+            status.innerHTML = `<strong>${m.title}:</strong> ${m.detail} <span class="text-emerald-700 font-semibold">(Siap dikodekan!)</span>`;
+        }
+
+        function resetDecomp() {
+            const subContainer = document.getElementById('decomp-submodules');
+            const mainBtn = document.getElementById('decomp-main-btn');
+            const status = document.getElementById('decomp-status');
+            mainBtn.innerHTML = `<span>📦 Sistem E-Kantin Sekolah (Klik untuk Pecah!)</span><span>+ Pecah Modul</span>`;
+            mainBtn.classList.replace('bg-slate-800', 'bg-brand-600');
+            subContainer.classList.add('hidden');
+            status.classList.add('hidden');
+        }
+
+        // --- Simulasi 2: Pengenalan Pola ---
+        const patternLevels = [
+            {
+                desc: "Level 1: Amati jumlah kendaraan yang lewat setiap jam (pola kelipatan/penambahan tetap):",
+                seq: ["12", "18", "24", "30", "?"],
+                options: ["34", "36", "40"],
+                answer: "36",
+                reason: "Polanya selalu bertambah +6 setiap jam (12 → 18 → 24 → 30 → 36)."
+            },
+            {
+                desc: "Level 2: Amati pertumbuhan kapasitas penyimpanan server berikut:",
+                seq: ["2 GB", "4 GB", "8 GB", "16 GB", "?"],
+                options: ["24 GB", "32 GB", "64 GB"],
+                answer: "32 GB",
+                reason: "Polanya berlipat ganda (×2) pada setiap tahap (2 → 4 → 8 → 16 → 32 GB)."
+            },
+            {
+                desc: "Level 3: Amati kode lampu lalu lintas pintar (siklus berulang):",
+                seq: ["🔴", "🟡", "🟢", "🔴", "🟡", "?"],
+                options: ["🔴", "🟡", "🟢"],
+                answer: "🟢",
+                reason: "Siklus berulang setiap 3 warna: Merah → Kuning → Hijau."
+            }
+        ];
+        let currentPatternIdx = 0;
+
+        function renderPatternLevel() {
+            const lvl = patternLevels[currentPatternIdx];
+            document.getElementById('pattern-score').textContent = `Level ${currentPatternIdx + 1} / ${patternLevels.length}`;
+            document.getElementById('pattern-desc').textContent = lvl.desc;
+            
+            const seqEl = document.getElementById('pattern-sequence');
+            seqEl.innerHTML = lvl.seq.map(item => `
+                <div class="px-3.5 py-2.5 rounded-xl font-mono font-bold text-sm sm:text-base ${item === '?' ? 'bg-amber-100 border-2 border-dashed border-amber-500 text-amber-800 animate-pulse' : 'bg-white border border-slate-300 text-slate-800 shadow-sm'}">
+                    ${item}
+                </div>
+            `).join('');
+
+            const optEl = document.getElementById('pattern-options');
+            optEl.innerHTML = lvl.options.map(opt => `
+                <button onclick="checkPatternAnswer('${opt}')" class="py-2.5 px-3 rounded-xl bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-500 font-mono font-bold text-sm text-slate-800 transition shadow-sm">
+                    ${opt}
+                </button>
+            `).join('');
+
+            document.getElementById('pattern-feedback').classList.add('hidden');
+        }
+
+        function checkPatternAnswer(selected) {
+            const lvl = patternLevels[currentPatternIdx];
+            const fb = document.getElementById('pattern-feedback');
+            fb.classList.remove('hidden');
+
+            if (selected === lvl.answer) {
+                fb.className = "mt-4 p-3 rounded-xl text-xs font-medium bg-emerald-100 text-emerald-900 border border-emerald-300";
+                if (currentPatternIdx < patternLevels.length - 1) {
+                    fb.innerHTML = `✅ <strong>Tepat sekali!</strong> ${lvl.reason} <button onclick="nextPatternLevel()" class="ml-2 underline font-bold text-emerald-800">Lanjut Level ${currentPatternIdx + 2} &rarr;</button>`;
+                } else {
+                    fb.innerHTML = `🎉 <strong>Luar biasa!</strong> Semua pola berhasil dikenali. ${lvl.reason} <button onclick="currentPatternIdx=0;renderPatternLevel()" class="ml-2 underline font-bold">Ulangi</button>`;
+                }
+            } else {
+                fb.className = "mt-4 p-3 rounded-xl text-xs font-medium bg-rose-100 text-rose-900 border border-rose-300";
+                fb.innerHTML = `❌ Belum tepat. Perhatikan selisih atau pengulangan antar elemen sebelumnya, lalu coba lagi!`;
+            }
+        }
+
+        function nextPatternLevel() {
+            currentPatternIdx = (currentPatternIdx + 1) % patternLevels.length;
+            renderPatternLevel();
+        }
+        renderPatternLevel();
+
+        // --- Simulasi 3: Abstraksi ---
+        const abstractionData = [
+            { id: 'nis', label: 'NIS (Nomor Induk)', essential: true },
+            { id: 'sepatu', label: 'Warna Sepatu Siswa', essential: false },
+            { id: 'waktu', label: 'Waktu Scan Kehadiran', essential: true },
+            { id: 'hobi', label: 'Makanan Favorit', essential: false },
+            { id: 'status', label: 'Status (Hadir/Izin/Sakit)', essential: true },
+            { id: 'tinggi', label: 'Tinggi Badan (cm)', essential: false }
+        ];
+        let selectedAbstraction = new Set();
+
+        function renderAbstraction() {
+            const container = document.getElementById('abstraction-items');
+            container.innerHTML = abstractionData.map(item => {
+                const isSelected = selectedAbstraction.has(item.id);
+                return `
+                    <button onclick="toggleAbstraction('${item.id}')" class="p-3 rounded-xl border text-xs font-semibold text-left transition ${isSelected ? 'bg-sky-600 text-white border-sky-600 shadow' : 'bg-white text-slate-700 border-slate-300 hover:border-sky-400'}">
+                        ${isSelected ? '☑️' : '⬜'} ${item.label}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function toggleAbstraction(id) {
+            if (selectedAbstraction.has(id)) {
+                selectedAbstraction.delete(id);
+            } else {
+                if (selectedAbstraction.size >= 3) {
+                    const fb = document.getElementById('abstraction-feedback');
+                    fb.className = "mt-4 p-3 rounded-xl text-xs bg-amber-100 text-amber-900 border border-amber-300 block";
+                    fb.textContent = "⚠️ Maksimal pilih 3 data yang paling esensial saja!";
+                    return;
+                }
+                selectedAbstraction.add(id);
+            }
+            document.getElementById('abstraction-feedback').classList.add('hidden');
+            renderAbstraction();
+        }
+
+        function checkAbstraction() {
+            const fb = document.getElementById('abstraction-feedback');
+            fb.classList.remove('hidden');
+            if (selectedAbstraction.size < 3) {
+                fb.className = "mt-4 p-3 rounded-xl text-xs bg-amber-100 text-amber-900 border border-amber-300";
+                fb.textContent = "Pilih tepat 3 atribut data yang paling penting untuk absensi.";
+                return;
+            }
+            const correctIds = ['nis', 'waktu', 'status'];
+            const allCorrect = correctIds.every(id => selectedAbstraction.has(id));
+            if (allCorrect) {
+                fb.className = "mt-4 p-3 rounded-xl text-xs bg-emerald-100 text-emerald-900 border border-emerald-300";
+                fb.innerHTML = "✅ <strong>Abstraksi Sempurna!</strong> NIS, Waktu Scan, dan Status Kehadiran adalah informasi inti. Warna sepatu, tinggi badan, dan makanan favorit diabaikan karena tidak memengaruhi proses absensi.";
+            } else {
+                fb.className = "mt-4 p-3 rounded-xl text-xs bg-rose-100 text-rose-900 border border-rose-300";
+                fb.innerHTML = "❌ Masih ada informasi yang tidak relevan ikut terpilih. Coba saring kembali: data apa yang benar-benar dibutuhkan untuk mencatat kehadiran?";
+            }
+        }
+
+        function resetAbstraction() {
+            selectedAbstraction.clear();
+            document.getElementById('abstraction-feedback').classList.add('hidden');
+            renderAbstraction();
+        }
+        renderAbstraction();
+
+        // --- Simulasi 4: Algoritma Robot Grid 4x4 ---
+        // Start: (0,0), Walls: (1,1), (2,1), (1,3), Goal: (3,3)
+        let robotPos = { r: 0, c: 0 };
+        const robotWalls = ["1,1", "2,1", "1,3"];
+        const robotGoal = { r: 3, c: 3 };
+        let robotCmds = [];
+        let robotRunning = false;
+
+        function renderRobotGrid() {
+            const grid = document.getElementById('robot-grid');
+            let html = '';
+            for (let r = 0; r < 4; r++) {
+                for (let c = 0; c < 4; c++) {
+                    const key = `${r},${c}`;
+                    let content = '';
+                    let bg = 'bg-white';
+                    if (robotPos.r === r && robotPos.c === c) {
+                        content = '🤖';
+                        bg = 'bg-purple-100 border-2 border-purple-500';
+                    } else if (robotGoal.r === r && robotGoal.c === c) {
+                        content = '🏁';
+                        bg = 'bg-emerald-100';
+                    } else if (robotWalls.includes(key)) {
+                        content = '🧱';
+                        bg = 'bg-slate-300';
+                    }
+                    html += `<div class="rounded-lg ${bg} flex items-center justify-center text-lg sm:text-xl shadow-sm">${content}</div>`;
+                }
+            }
+            grid.innerHTML = html;
+            document.getElementById('cmd-count').textContent = robotCmds.length;
+            document.getElementById('robot-cmds-display').innerHTML = robotCmds.map(cmd => `
+                <span class="px-1.5 py-0.5 rounded bg-purple-100 text-purple-800 font-bold">${cmd}</span>
+            `).join('');
+        }
+
+        function addRobotCmd(dir) {
+            if (robotRunning || robotCmds.length >= 8) return;
+            robotCmds.push(dir);
+            renderRobotGrid();
+        }
+
+        function resetRobotAlgo() {
+            robotRunning = false;
+            robotPos = { r: 0, c: 0 };
+            robotCmds = [];
+            document.getElementById('robot-feedback').classList.add('hidden');
+            renderRobotGrid();
+        }
+
+        async function runRobotAlgo() {
+            if (robotRunning || robotCmds.length === 0) return;
+            robotRunning = true;
+            robotPos = { r: 0, c: 0 };
+            renderRobotGrid();
+            const fb = document.getElementById('robot-feedback');
+            fb.classList.add('hidden');
+
+            for (let i = 0; i < robotCmds.length; i++) {
+                await new Promise(res => setTimeout(res, 400));
+                const cmd = robotCmds[i];
+                let nr = robotPos.r;
+                let nc = robotPos.c;
+                if (cmd === 'ATAS') nr--;
+                if (cmd === 'BAWAH') nr++;
+                if (cmd === 'KIRI') nc--;
+                if (cmd === 'KANAN') nc++;
+
+                // Check bounds & walls
+                if (nr < 0 || nr > 3 || nc < 0 || nc > 3 || robotWalls.includes(`${nr},${nc}`)) {
+                    fb.className = "mt-3 p-2.5 rounded-xl text-xs font-medium bg-rose-100 text-rose-900 border border-rose-300 block";
+                    fb.textContent = `💥 Tabrakan pada langkah ke-${i + 1} (${cmd})! Algoritma berhenti. Klik Reset untuk memperbaiki urutan langkah.`;
+                    robotRunning = false;
+                    return;
+                }
+                robotPos = { r: nr, c: nc };
+                renderRobotGrid();
+
+                if (robotPos.r === robotGoal.r && robotPos.c === robotGoal.c) {
+                    fb.className = "mt-3 p-2.5 rounded-xl text-xs font-medium bg-emerald-100 text-emerald-900 border border-emerald-300 block";
+                    fb.textContent = `🎉 Berhasil! Robot mencapai tujuan dalam ${i + 1} langkah algoritma yang efisien!`;
+                    robotRunning = false;
+                    return;
+                }
+            }
+
+            fb.className = "mt-3 p-2.5 rounded-xl text-xs font-medium bg-amber-100 text-amber-900 border border-amber-300 block";
+            fb.textContent = "⚠️ Semua instruksi selesai dijalankan, tetapi robot belum sampai ke bendera (🏁). Tambahkan langkah lagi!";
+            robotRunning = false;
+        }
+        renderRobotGrid();
+
+        /* =========================================================
+           2. SEARCHING VISUALIZER (LINEAR & BINARY SEARCH)
+           ========================================================= */
+        let searchAlgo = 'linear';
+        let searchArr = [14, 23, 35, 42, 56, 68, 79, 91];
+        let searchState = {
+            step: 0,
+            index: 0,
+            low: 0,
+            high: 7,
+            mid: -1,
+            foundIdx: -1,
+            done: false,
+            eliminated: new Set()
+        };
+        let searchTimer = null;
+
+        function setSearchAlgo(algo) {
+            searchAlgo = algo;
+            const btnLin = document.getElementById('btn-search-linear');
+            const btnBin = document.getElementById('btn-search-binary');
+            if (algo === 'linear') {
+                btnLin.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-600 text-white transition";
+                btnBin.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition";
+                document.getElementById('search-title').textContent = "Linear Search (Pencarian Beruntun)";
+                document.getElementById('search-desc').innerHTML = `Memeriksa elemen data satu per satu dari indeks paling kiri hingga target ditemukan. Cocok untuk data acak maupun terurut. Kompleksitas waktu: <code class="text-cyan-300 font-mono">O(n)</code>.`;
+            } else {
+                btnBin.className = "px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-600 text-white transition";
+                btnLin.className = "px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition";
+                document.getElementById('search-title').textContent = "Binary Search (Pencarian Biner)";
+                document.getElementById('search-desc').innerHTML = `Membagi dua ruang pencarian pada <strong>data yang sudah terurut</strong> dengan mengecek nilai tengah (<em>mid</em>). Jauh lebih cepat! Kompleksitas waktu: <code class="text-cyan-300 font-mono">O(log n)</code>.`;
+            }
+            resetSearch(false);
+        }
+
+        function resetSearch(randomize = true) {
+            clearInterval(searchTimer);
+            if (randomize) {
+                const set = new Set();
+                while (set.size < 8) {
+                    set.add(Math.floor(Math.random() * 85) + 10);
+                }
+                searchArr = Array.from(set);
+                if (searchAlgo === 'binary') {
+                    searchArr.sort((a, b) => a - b);
+                }
+                // Pick a valid target 75% of the time so student sees success easily
+                if (Math.random() < 0.75) {
+                    document.getElementById('search-target').value = searchArr[Math.floor(Math.random() * 8)];
+                }
+            } else if (searchAlgo === 'binary') {
+                searchArr.sort((a, b) => a - b);
+            }
+
+            searchState = {
+                step: 0,
+                index: 0,
+                low: 0,
+                high: searchArr.length - 1,
+                mid: -1,
+                foundIdx: -1,
+                done: false,
+                eliminated: new Set()
+            };
+            document.getElementById('search-step-counter').textContent = "Langkah: 0";
+            document.getElementById('search-log').textContent = `Data siap (${searchAlgo === 'binary' ? 'Terurut menaik' : 'Urutan array'}). Klik "Langkah Berikutnya".`;
+            renderSearchArray(-1);
+        }
+
+        function renderSearchArray(activeIdx) {
+            const container = document.getElementById('search-array-container');
+            container.innerHTML = searchArr.map((val, idx) => {
+                let style = "bg-slate-800 border-slate-600 text-white";
+                if (searchState.foundIdx === idx) {
+                    style = "bg-emerald-500 border-emerald-300 text-slate-950 scale-105 shadow-lg shadow-emerald-500/30";
+                } else if (activeIdx === idx) {
+                    style = "bg-amber-500 border-amber-300 text-slate-950 scale-105";
+                } else if (searchState.eliminated.has(idx)) {
+                    style = "bg-slate-800/40 border-slate-800 text-slate-500 opacity-40";
+                }
+                return `
+                    <div class="flex flex-col items-center">
+                        <div class="w-full aspect-square rounded-xl border-2 ${style} flex items-center justify-center font-mono font-bold text-xs sm:text-sm transition-all duration-200">
+                            ${val}
+                        </div>
+                        <span class="text-[10px] font-mono text-slate-500 mt-1">[${idx}]</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function stepSearch() {
+            if (searchState.done) return;
+            const target = parseInt(document.getElementById('search-target').value, 10);
+            if (isNaN(target)) {
+                document.getElementById('search-log').textContent = "⚠️ Masukkan angka target yang valid terlebih dahulu.";
+                return;
+            }
+
+            searchState.step++;
+            document.getElementById('search-step-counter').textContent = `Langkah: ${searchState.step}`;
+            const logEl = document.getElementById('search-log');
+
+            if (searchAlgo === 'linear') {
+                const i = searchState.index;
+                if (i >= searchArr.length) {
+                    searchState.done = true;
+                    logEl.textContent = `❌ Selesai (${searchState.step} langkah): Angka ${target} tidak ditemukan dalam array.`;
+                    renderSearchArray(-1);
+                    return;
+                }
+                renderSearchArray(i);
+                if (searchArr[i] === target) {
+                    searchState.foundIdx = i;
+                    searchState.done = true;
+                    renderSearchArray(i);
+                    logEl.textContent = `✅ DITEMUKAN pada indeks [${i}]! Total pengecekan: ${searchState.step} langkah.`;
+                } else {
+                    logEl.textContent = `Langkah ${searchState.step}: Cek indeks [${i}] bernilai ${searchArr[i]} ≠ ${target}. Lanjut ke kanan...`;
+                    searchState.eliminated.add(i);
+                    searchState.index++;
+                    if (searchState.index >= searchArr.length) {
+                        searchState.done = true;
+                        setTimeout(() => {
+                            renderSearchArray(-1);
+                            logEl.textContent = `❌ Selesai: Seluruh elemen telah diperiksa, angka ${target} tidak ditemukan.`;
+                        }, 450);
+                    }
+                }
+            } else {
+                // Binary Search
+                if (searchState.low > searchState.high) {
+                    searchState.done = true;
+                    renderSearchArray(-1);
+                    logEl.textContent = `❌ Selesai (${searchState.step} langkah): Angka ${target} tidak ada di dalam data.`;
+                    return;
+                }
+                const mid = Math.floor((searchState.low + searchState.high) / 2);
+                renderSearchArray(mid);
+
+                if (searchArr[mid] === target) {
+                    searchState.foundIdx = mid;
+                    searchState.done = true;
+                    renderSearchArray(mid);
+                    logEl.textContent = `✅ DITEMUKAN pada indeks tengah [${mid}]! Hanya butuh ${searchState.step} langkah!`;
+                } else if (searchArr[mid] < target) {
+                    logEl.textContent = `Langkah ${searchState.step}: Tengah [${mid}]=${searchArr[mid]} < ${target}. Eliminasi bagian kiri!`;
+                    for (let k = searchState.low; k <= mid; k++) searchState.eliminated.add(k);
+                    searchState.low = mid + 1;
+                } else {
+                    logEl.textContent = `Langkah ${searchState.step}: Tengah [${mid}]=${searchArr[mid]} > ${target}. Eliminasi bagian kanan!`;
+                    for (let k = mid; k <= searchState.high; k++) searchState.eliminated.add(k);
+                    searchState.high = mid - 1;
+                }
+
+                if (!searchState.done && searchState.low > searchState.high) {
+                    searchState.done = true;
+                    setTimeout(() => {
+                        renderSearchArray(-1);
+                        logEl.textContent = `❌ Selesai (${searchState.step} langkah): Angka ${target} tidak ditemukan.`;
+                    }, 500);
+                }
+            }
+        }
+
+        function autoRunSearch() {
+            if (searchState.done) resetSearch(false);
+            clearInterval(searchTimer);
+            searchTimer = setInterval(() => {
+                if (searchState.done) {
+                    clearInterval(searchTimer);
+                } else {
+                    stepSearch();
+                }
+            }, 650);
+        }
+        resetSearch(false);
+
+        /* =========================================================
+           3. SORTING VISUALIZER (BUBBLE, SELECTION, INSERTION)
+           ========================================================= */
+        let sortAlgo = 'bubble';
+        let sortArr = [65, 25, 80, 40, 15, 90, 50];
+        let sortSteps = [];
+        let sortStepIdx = 0;
+        let sortTimer = null;
+
+        function setSortAlgo(algo) {
+            sortAlgo = algo;
+            ['bubble', 'selection', 'insertion'].forEach(name => {
+                const btn = document.getElementById(`btn-sort-${name}`);
+                if (name === algo) {
+                    btn.className = "px-2.5 py-1.5 rounded-lg text-xs font-bold bg-indigo-600 text-white transition";
+                } else {
+                    btn.className = "px-2.5 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition";
+                }
+            });
+
+            const info = {
+                bubble: {
+                    title: "Bubble Sort (Pengurutan Gelembung)",
+                    desc: `Membandingkan dua elemen bersebelahan dan menukarnya jika urutannya salah, sehingga nilai terbesar "mengapung" ke ujung kanan di setiap iterasi.`
+                },
+                selection: {
+                    title: "Selection Sort (Pengurutan Seleksi)",
+                    desc: `Mencari elemen terkecil dari bagian yang belum terurut, lalu menukarnya langsung ke posisi paling depan yang belum terurut.`
+                },
+                insertion: {
+                    title: "Insertion Sort (Pengurutan Sisip)",
+                    desc: `Mengambil satu elemen dan menyisipkannya ke posisi yang tepat di antara elemen-elemen sebelumnya yang sudah terurut (seperti mengurutkan kartu di tangan).`
+                }
+            };
+            document.getElementById('sort-title').textContent = info[algo].title;
+            document.getElementById('sort-desc').textContent = info[algo].desc;
+            resetSort(false);
+        }
+
+        function generateSortSteps(arr, algo) {
+            const a = [...arr];
+            const steps = [];
+            const n = a.length;
+
+            if (algo === 'bubble') {
+                const sorted = new Set();
+                for (let i = 0; i < n - 1; i++) {
+                    for (let j = 0; j < n - i - 1; j++) {
+                        steps.push({ arr: [...a], compare: [j, j + 1], swap: [], sorted: new Set(sorted), msg: `Bandingkan ${a[j]} dan ${a[j + 1]}...` });
+                        if (a[j] > a[j + 1]) {
+                            [a[j], a[j + 1]] = [a[j + 1], a[j]];
+                            steps.push({ arr: [...a], compare: [], swap: [j, j + 1], sorted: new Set(sorted), msg: `Karena ${a[j + 1]} > ${a[j]}, tukar posisi!` });
+                        }
+                    }
+                    sorted.add(n - 1 - i);
+                }
+                for (let k = 0; k < n; k++) sorted.add(k);
+                steps.push({ arr: [...a], compare: [], swap: [], sorted, msg: "✅ Bubble Sort selesai! Seluruh data telah terurut menaik." });
+            } else if (algo === 'selection') {
+                const sorted = new Set();
+                for (let i = 0; i < n - 1; i++) {
+                    let minIdx = i;
+                    for (let j = i + 1; j < n; j++) {
+                        steps.push({ arr: [...a], compare: [minIdx, j], swap: [], sorted: new Set(sorted), msg: `Mencari nilai terkecil: bandingkan ${a[minIdx]} dengan ${a[j]}` });
+                        if (a[j] < a[minIdx]) minIdx = j;
+                    }
+                    if (minIdx !== i) {
+                        [a[i], a[minIdx]] = [a[minIdx], a[i]];
+                        steps.push({ arr: [...a], compare: [], swap: [i, minIdx], sorted: new Set(sorted), msg: `Tukar nilai terkecil (${a[i]}) ke posisi [${i}]` });
+                    }
+                    sorted.add(i);
+                }
+                for (let k = 0; k < n; k++) sorted.add(k);
+                steps.push({ arr: [...a], compare: [], swap: [], sorted, msg: "✅ Selection Sort selesai! Seluruh data telah terurut menaik." });
+            } else if (algo === 'insertion') {
+                const sorted = new Set([0]);
+                for (let i = 1; i < n; i++) {
+                    let key = a[i];
+                    let j = i - 1;
+                    steps.push({ arr: [...a], compare: [i, j], swap: [], sorted: new Set(sorted), msg: `Ambil elemen kunci ${key} untuk disisipkan ke bagian terurut.` });
+                    while (j >= 0 && a[j] > key) {
+                        a[j + 1] = a[j];
+                        steps.push({ arr: [...a], compare: [], swap: [j, j + 1], sorted: new Set(sorted), msg: `Geser ${a[j]} ke kanan karena lebih besar dari ${key}.` });
+                        j--;
+                    }
+                    a[j + 1] = key;
+                    for (let k = 0; k <= i; k++) sorted.add(k);
+                    steps.push({ arr: [...a], compare: [], swap: [j + 1], sorted: new Set(sorted), msg: `Sisipkan ${key} pada indeks [${j + 1}].` });
+                }
+                const allSorted = new Set(a.map((_, idx) => idx));
+                steps.push({ arr: [...a], compare: [], swap: [], sorted: allSorted, msg: "✅ Insertion Sort selesai! Seluruh data telah terurut menaik." });
+            }
+            return steps;
+        }
+
+        function renderSortBars(state) {
+            const container = document.getElementById('sort-bars-container');
+            container.innerHTML = state.arr.map((val, idx) => {
+                let colorClass = "bg-indigo-500";
+                if (state.sorted && state.sorted.has(idx)) colorClass = "bg-emerald-500";
+                if (state.compare && state.compare.includes(idx)) colorClass = "bg-amber-400";
+                if (state.swap && state.swap.includes(idx)) colorClass = "bg-rose-500";
+
+                const heightPct = Math.max(18, val);
+                return `
+                    <div class="flex-1 flex flex-col items-center justify-end h-full">
+                        <span class="text-[11px] font-mono font-bold text-slate-300 mb-1">${val}</span>
+                        <div class="w-full max-w-[38px] rounded-t-lg ${colorClass} bar-transition shadow-sm" style="height: ${heightPct}%;"></div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function resetSort(randomize = true) {
+            clearInterval(sortTimer);
+            if (randomize) {
+                sortArr = Array.from({ length: 7 }, () => Math.floor(Math.random() * 80) + 15);
+            }
+            sortSteps = generateSortSteps(sortArr, sortAlgo);
+            sortStepIdx = 0;
+            document.getElementById('sort-step-counter').textContent = `Langkah: 0 / ${sortSteps.length}`;
+            document.getElementById('sort-log').textContent = `Data siap diurutkan menggunakan ${sortAlgo.toUpperCase()} SORT.`;
+            renderSortBars({ arr: sortArr, compare: [], swap: [], sorted: new Set() });
+        }
+
+        function stepSort() {
+            if (sortStepIdx >= sortSteps.length) return;
+            const current = sortSteps[sortStepIdx];
+            sortStepIdx++;
+            document.getElementById('sort-step-counter').textContent = `Langkah: ${sortStepIdx} / ${sortSteps.length}`;
+            document.getElementById('sort-log').textContent = current.msg;
+            renderSortBars(current);
+        }
+
+        function autoRunSort() {
+            if (sortStepIdx >= sortSteps.length) resetSort(false);
+            clearInterval(sortTimer);
+            sortTimer = setInterval(() => {
+                if (sortStepIdx >= sortSteps.length) {
+                    clearInterval(sortTimer);
+                } else {
+                    stepSort();
+                }
+            }, 450);
+        }
+        resetSort(false);
+
+        /* =========================================================
+           4. STRUKTUR DATA: STACK (LIFO) & QUEUE (FIFO)
+           ========================================================= */
+        let stackData = ["Ketik Judul", "Sisipkan Gambar"];
+        const MAX_CAPACITY = 5;
+
+        function renderStack() {
+            const container = document.getElementById('stack-visual');
+            if (stackData.length === 0) {
+                container.innerHTML = `<div class="text-center text-xs text-slate-400 my-auto py-8">Tumpukan Kosong (Empty Stack)</div>`;
+                return;
+            }
+            container.innerHTML = stackData.map((item, idx) => {
+                const isTop = idx === stackData.length - 1;
+                return `
+                    <div class="stack-item-enter px-3 py-2 rounded-xl text-xs font-bold flex items-center justify-between border ${isTop ? 'bg-amber-500 text-white border-amber-600 shadow' : 'bg-amber-50 text-amber-900 border-amber-200'}">
+                        <span>${item}</span>
+                        ${isTop ? '<span class="text-[10px] font-mono bg-amber-700/60 px-1.5 py-0.5 rounded">TOP</span>' : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function pushStack() {
+            const input = document.getElementById('stack-input');
+            const msg = document.getElementById('stack-msg');
+            const val = input.value.trim() || `Aksi #${stackData.length + 1}`;
+            if (stackData.length >= MAX_CAPACITY) {
+                msg.innerHTML = `<span class="text-rose-600 font-bold">⚠️ Stack Overflow!</span> Tumpukan sudah penuh (maksimal ${MAX_CAPACITY} item).`;
+                return;
+            }
+            stackData.push(val);
+            input.value = '';
+            renderStack();
+            msg.innerHTML = `<span class="text-emerald-700 font-bold">✅ Push("${val}")</span> berhasil. Elemen kini berada di posisi paling atas (TOP).`;
+        }
+
+        function popStack() {
+            const msg = document.getElementById('stack-msg');
+            if (stackData.length === 0) {
+                msg.innerHTML = `<span class="text-rose-600 font-bold">⚠️ Stack Underflow!</span> Tidak ada data yang bisa diambil karena tumpukan kosong.`;
+                return;
+            }
+            const removed = stackData.pop();
+            renderStack();
+            msg.innerHTML = `<span class="text-indigo-700 font-bold">⬆️ Pop() &rarr; "${removed}"</span> dikeluarkan karena merupakan data terakhir yang masuk (LIFO).`;
+        }
+        renderStack();
+
+        // --- Queue (FIFO) ---
+        let queueData = ["Siswa 01", "Siswa 02"];
+        let queueCounter = 3;
+
+        function renderQueue() {
+            const container = document.getElementById('queue-visual');
+            if (queueData.length === 0) {
+                container.innerHTML = `<div class="text-center text-xs text-slate-400 w-full">Antrean Kosong (Empty Queue)</div>`;
+                return;
+            }
+            container.innerHTML = queueData.map((item, idx) => {
+                const isFront = idx === 0;
+                const isRear = idx === queueData.length - 1;
+                return `
+                    <div class="queue-item-enter shrink-0 px-3.5 py-2.5 rounded-xl text-xs font-bold border flex flex-col items-center ${isFront ? 'bg-teal-600 text-white border-teal-700 shadow' : 'bg-teal-50 text-teal-900 border-teal-200'}">
+                        <span>${item}</span>
+                        <span class="text-[9px] font-mono opacity-80 mt-0.5">${isFront ? 'FRONT' : (isRear ? 'REAR' : `#${idx + 1}`)}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function enqueueItem() {
+            const input = document.getElementById('queue-input');
+            const msg = document.getElementById('queue-msg');
+            const val = input.value.trim() || `Siswa 0${queueCounter++}`;
+            if (queueData.length >= MAX_CAPACITY) {
+                msg.innerHTML = `<span class="text-rose-600 font-bold">⚠️ Queue Full!</span> Antrean sudah penuh (maksimal ${MAX_CAPACITY} orang).`;
+                return;
+            }
+            queueData.push(val);
+            input.value = '';
+            renderQueue();
+            msg.innerHTML = `<span class="text-teal-700 font-bold">✅ Enqueue("${val}")</span> masuk ke barisan paling belakang (REAR).`;
+        }
+
+        function dequeueItem() {
+            const msg = document.getElementById('queue-msg');
+            if (queueData.length === 0) {
+                msg.innerHTML = `<span class="text-rose-600 font-bold">⚠️ Queue Empty!</span> Tidak ada antrean yang dapat dilayani.`;
+                return;
+            }
+            const served = queueData.shift();
+            renderQueue();
+            msg.innerHTML = `<span class="text-indigo-700 font-bold">➡️ Dequeue() &rarr; "${served}"</span> dilayani lebih dulu karena masuk paling awal (FIFO).`;
+        }
+        renderQueue();
+
+        /* =========================================================
+           5. KUIS EVALUASI HOTS INTERAKTIF
+           ========================================================= */
+        const quizQuestions = [
+            {
+                category: "Penerapan 4 Pilar BK (Abstraksi)",
+                question: "Seorang pengembang aplikasi ojek online membuat tampilan peta navigasi bagi pengemudi. Peta tersebut hanya menampilkan jalur jalan raya, nama jalan utama, dan titik kemacetan, sementara detail seperti bentuk atap rumah warga dan jenis pohon di trotoar dihilangkan. Pilar berpikir komputasional yang paling dominan diterapkan adalah...",
+                options: [
+                    "Dekomposisi, karena membagi kota menjadi beberapa wilayah kecamatan.",
+                    "Abstraksi, karena menyaring detail yang tidak relevan dan fokus pada informasi penting untuk navigasi.",
+                    "Pengenalan Pola, karena menghitung jumlah kendaraan yang lewat setiap pagi.",
+                    "Algoritma, karena menentukan harga ongkos kirim berdasarkan jarak tempuh."
+                ],
+                correct: 1,
+                explanation: "Abstraksi adalah proses menyederhanakan masalah dengan fokus hanya pada informasi esensial (jalur jalan & kemacetan) serta mengabaikan detail yang tidak diperlukan (bentuk atap rumah & pohon)."
+            },
+            {
+                category: "Efisiensi Algoritma Pencarian",
+                question: "Perpustakaan sekolah memiliki 1.024 buku yang telah disusun secara terurut berdasarkan nomor katalog (0001 s.d. 1024). Jika pustakawan menggunakan algoritma Binary Search untuk mencari buku bernomor 0890, berapakah perkiraan jumlah langkah pengecekan maksimal yang diperlukan?",
+                options: [
+                    "1.024 langkah",
+                    "512 langkah",
+                    "10 langkah",
+                    "1 langkah"
+                ],
+                correct: 2,
+                explanation: "Binary Search membagi dua ruang pencarian di setiap langkah (2^10 = 1.024). Oleh karena itu, pencarian pada 1.024 data terurut hanya membutuhkan maksimal log2(1024) = 10 langkah saja!"
+            },
+            {
+                category: "Analisis Struktur Data",
+                question: "Sebuah peramban web (browser) menyimpan riwayat halaman yang dikunjungi pengguna agar tombol 'Back' (Kembali) dapat mengarahkan pengguna ke halaman yang paling terakhir dibuka sebelum halaman saat ini. Struktur data yang paling tepat digunakan untuk fitur tombol 'Back' tersebut adalah...",
+                options: [
+                    "Queue (Antrean), karena menggunakan prinsip First-In First-Out (FIFO).",
+                    "Stack (Tumpukan), karena halaman yang terakhir dikunjungi harus diakses pertama kali (LIFO).",
+                    "Bubble Sort, karena mengurutkan alamat URL berdasarkan abjad.",
+                    "Linear Search, karena mencari riwayat dari halaman pertama kali browser dibuka."
+                ],
+                correct: 1,
+                explanation: "Tombol 'Back' pada browser bekerja dengan prinsip LIFO (Last-In, First-Out): halaman terakhir yang masuk ke riwayat adalah halaman pertama yang dibuka kembali saat tombol Back ditekan, sehingga menggunakan struktur data Stack."
+            },
+            {
+                category: "Penalaran Pengurutan (Sorting)",
+                question: "Diberikan barisan angka acak: [35, 12, 48, 20]. Jika dilakukan pengurutan menaik (ascending) menggunakan Bubble Sort, bagaimanakah susunan barisan angka tersebut tepat setelah melewati 1 putaran penuh (iterasi pertama)?",
+                options: [
+                    "[12, 20, 35, 48]",
+                    "[12, 35, 20, 48]",
+                    "[12, 35, 48, 20]",
+                    "[20, 12, 35, 48]"
+                ],
+                correct: 1,
+                explanation: "Pada iterasi pertama Bubble Sort: (1) Bandingkan 35 & 12 -> tukar menjadi [12, 35, 48, 20]. (2) Bandingkan 35 & 48 -> tetap. (3) Bandingkan 48 & 20 -> tukar menjadi [12, 35, 20, 48]. Nilai terbesar (48) mengapung ke ujung kanan."
+            },
+            {
+                category: "Studi Kasus Queue (FIFO)",
+                question: "Sebuah mesin kasir melayani antrean dengan struktur data Queue. Kondisi antrean saat ini dari depan ke belakang adalah: [Budi, Citra, Dimas]. Jika dilakukan operasi berikut secara berurutan: Dequeue(), Enqueue('Eka'), Dequeue(), siapakah yang kini berada di posisi paling depan (FRONT)?",
+                options: [
+                    "Budi",
+                    "Citra",
+                    "Dimas",
+                    "Eka"
+                ],
+                correct: 2,
+                explanation: "Awal: [Budi, Citra, Dimas]. (1) Dequeue() mengeluarkan Budi -> [Citra, Dimas]. (2) Enqueue('Eka') menambah Eka di belakang -> [Citra, Dimas, Eka]. (3) Dequeue() mengeluarkan Citra -> [Dimas, Eka]. Maka Dimas berada di posisi paling depan (FRONT)."
+            }
+        ];
+
+        let qIdx = 0;
+        let qScore = 0;
+        let qAnswered = false;
+
+        function renderQuiz() {
+            const q = quizQuestions[qIdx];
+            qAnswered = false;
+
+            document.getElementById('quiz-progress-text').textContent = `Soal ${qIdx + 1} dari ${quizQuestions.length}`;
+            document.getElementById('quiz-live-score').textContent = `Skor: ${qScore}`;
+            document.getElementById('quiz-progress-bar').style.width = `${((qIdx + 1) / quizQuestions.length) * 100}%`;
+
+            document.getElementById('quiz-category').textContent = q.category;
+            document.getElementById('quiz-question').textContent = `${qIdx + 1}. ${q.question}`;
+
+            const optionsEl = document.getElementById('quiz-options');
+            const letters = ['A', 'B', 'C', 'D'];
+            optionsEl.innerHTML = q.options.map((opt, idx) => `
+                <button onclick="selectQuizOption(${idx})" id="q-opt-${idx}" class="w-full p-4 rounded-2xl border-2 border-slate-200 hover:border-brand-400 bg-slate-50/70 hover:bg-brand-50/50 text-left text-sm text-slate-800 font-medium transition flex items-start gap-3">
+                    <span class="w-7 h-7 rounded-lg bg-white border border-slate-300 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">${letters[idx]}</span>
+                    <span>${opt}</span>
+                </button>
+            `).join('');
+
+            document.getElementById('quiz-explanation').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+        }
+
+        function selectQuizOption(selectedIdx) {
+            if (qAnswered) return;
+            qAnswered = true;
+
+            const q = quizQuestions[qIdx];
+            const isCorrect = selectedIdx === q.correct;
+            if (isCorrect) qScore += 20;
+
+            document.getElementById('quiz-live-score').textContent = `Skor: ${qScore}`;
+
+            // Style options
+            q.options.forEach((_, idx) => {
+                const btn = document.getElementById(`q-opt-${idx}`);
+                btn.disabled = true;
+                btn.classList.remove('hover:border-brand-400', 'hover:bg-brand-50/50');
+                if (idx === q.correct) {
+                    btn.classList.remove('border-slate-200', 'bg-slate-50/70');
+                    btn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-950');
+                } else if (idx === selectedIdx && !isCorrect) {
+                    btn.classList.remove('border-slate-200', 'bg-slate-50/70');
+                    btn.classList.add('border-rose-500', 'bg-rose-50', 'text-rose-950');
+                }
+            });
+
+            const expEl = document.getElementById('quiz-explanation');
+            expEl.classList.remove('hidden');
+            if (isCorrect) {
+                expEl.className = "mt-6 p-4 rounded-2xl border border-emerald-200 bg-emerald-50 text-emerald-900 text-xs sm:text-sm leading-relaxed";
+                expEl.innerHTML = `<strong>✅ Jawaban Benar!</strong> ${q.explanation}`;
+            } else {
+                expEl.className = "mt-6 p-4 rounded-2xl border border-rose-200 bg-rose-50 text-rose-900 text-xs sm:text-sm leading-relaxed";
+                expEl.innerHTML = `<strong>❌ Kurang Tepat.</strong> ${q.explanation}`;
+            }
+
+            const nextBtn = document.getElementById('quiz-next-btn');
+            nextBtn.classList.remove('hidden');
+            nextBtn.textContent = qIdx < quizQuestions.length - 1 ? "Soal Berikutnya →" : "Lihat Hasil Akhir 🏆";
+        }
+
+        function nextQuizQuestion() {
+            if (qIdx < quizQuestions.length - 1) {
+                qIdx++;
+                renderQuiz();
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function showQuizResult() {
+            document.getElementById('quiz-body').classList.add('hidden');
+            document.getElementById('quiz-result').classList.remove('hidden');
+
+            const correctCount = qScore / 20;
+            document.getElementById('quiz-final-score').textContent = qScore;
+            document.getElementById('quiz-correct-count').textContent = correctCount;
+
+            let predicate = "Perlu Pendalaman";
+            let medal = "📚";
+            if (qScore === 100) { predicate = "Sangat Mahir (Mastery)"; medal = "🏆"; }
+            else if (qScore >= 80) { predicate = "Mahir (Advanced)"; medal = "🥇"; }
+            else if (qScore >= 60) { predicate = "Berkembang (Developing)"; medal = "🌟"; }
+
+            document.getElementById('quiz-predicate').textContent = predicate;
+            document.getElementById('quiz-medal').textContent = medal;
+        }
+
+        function restartQuiz() {
+            qIdx = 0;
+            qScore = 0;
+            document.getElementById('quiz-result').classList.add('hidden');
+            document.getElementById('quiz-body').classList.remove('hidden');
+            renderQuiz();
+        }
+        renderQuiz();
+    </script>
+</body>
+</html>
